@@ -29,7 +29,12 @@ export class ClassGameBoard extends Component {
         <div id="fish-container">
           <img src={nextFishToName.url} alt={nextFishToName.name} />
         </div>
-        <form id="fish-guess-form">
+        <form
+          id="fish-guess-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <label htmlFor="fish-guess">What kind of fish is this?</label>
           <input type="text" name="fish-guess" />
           <input type="submit" />

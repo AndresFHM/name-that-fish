@@ -1,3 +1,4 @@
+
 import salmon from "./salmon.jpeg";
 import shark from "./shark.webp";
 import trout from "./trout.jpeg";
@@ -9,3 +10,6 @@ export const Images = {
     trout,
     tuna,
 };
+
+
+
