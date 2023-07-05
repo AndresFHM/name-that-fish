@@ -1,4 +1,5 @@
-import React, { useState, FormEvent } from "react";
+
+import { useState, FormEvent } from "react";
 import "./styles/game-board.css";
 import { Fish } from "../../types";
 
@@ -27,7 +28,6 @@ export function FunctionalGameBoard(props: FunctionalGameBoardProps) {
       setGuessResult("Incorrect");
     }
 
-    // Clear the input field after submission
     setFishGuessInput("");
   };
 

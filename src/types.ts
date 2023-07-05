@@ -3,3 +3,4 @@ export interface Fish {
     name: string;
     url: string;
 }
+
