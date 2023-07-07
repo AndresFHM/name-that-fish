@@ -1,4 +1,3 @@
-
 import { useState, FormEvent } from "react";
 import "./styles/game-board.css";
 import { Fish } from "../../types";
@@ -12,7 +11,6 @@ interface FunctionalGameBoardProps {
 export function FunctionalGameBoard(props: FunctionalGameBoardProps) {
   const { initialFishes, currentPictureIndex, handleGuessResult } = props;
   const [fishGuessInput, setFishGuessInput] = useState("");
-  const [guessResult, setGuessResult] = useState("");
 
   const nextFishToName = initialFishes[currentPictureIndex];
 
@@ -20,12 +18,12 @@ export function FunctionalGameBoard(props: FunctionalGameBoardProps) {
     e.preventDefault();
 
     if (fishGuessInput.toLowerCase() === nextFishToName.name.toLowerCase()) {
-      console.log("Correct");
+
       handleGuessResult(true);
     } else {
-      console.log("Incorrect");
+
       handleGuessResult(false);
-      setGuessResult("Incorrect");
+
     }
 
     setFishGuessInput("");
@@ -46,7 +44,6 @@ export function FunctionalGameBoard(props: FunctionalGameBoardProps) {
         />
         <input type="submit" />
       </form>
-      {guessResult && <p>{guessResult}</p>}
     </div>
   );
 }
