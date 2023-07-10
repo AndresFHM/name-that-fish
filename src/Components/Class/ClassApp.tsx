@@ -16,16 +16,14 @@ interface ClassAppProps {
 }
 
 export class ClassApp extends Component<ClassAppProps, ClassAppState> {
-  constructor(props: ClassAppProps) {
-    super(props);
-    this.state = {
-      answersLeft: props.initialFishes.slice(),
+
+    state: ClassAppState = {
+      answersLeft: this.props.initialFishes.slice(),
       correctCount: 0,
       incorrectCount: 0,
       currentPictureIndex: 0,
-    };
-  }
-
+  };
+  
   handleGuessResult = (isCorrect: boolean) => {
     const { correctCount, incorrectCount, currentPictureIndex } = this.state;
 
@@ -46,31 +44,36 @@ export class ClassApp extends Component<ClassAppProps, ClassAppState> {
   };
 
   render() {
-    const { answersLeft, correctCount, incorrectCount, currentPictureIndex } =
+    const {correctCount, incorrectCount, currentPictureIndex } =
       this.state;
 
-    if (answersLeft.length === 0) {
-      return (
-        <ClassFinalScore
-          correctCount={correctCount}
-          totalCount={correctCount + incorrectCount}
-        />
-      );
-    }
+    const answersLeft = this.props.initialFishes.slice(currentPictureIndex).map((fish) => fish.name)
+    const isGameOver = currentPictureIndex === this.props.initialFishes.length;
 
     return (
+     
       <>
-        <ClassScoreBoard
-          incorrectCount={incorrectCount}
-          correctCount={correctCount}
-          answersLeft={answersLeft.map((fish) => fish.name)}
-        />
-        <ClassGameBoard
-          initialFishes={this.props.initialFishes}
-          currentPictureIndex={currentPictureIndex}
-          handleGuessResult={this.handleGuessResult}
-        />
-      </>
+      {isGameOver && (
+      <ClassFinalScore
+        correctCount={correctCount}
+        totalCount={correctCount + incorrectCount}
+      />
+      )}
+      {!isGameOver && (
+        <>
+          <ClassScoreBoard
+            incorrectCount={incorrectCount}
+            correctCount={correctCount}
+            answersLeft={answersLeft}
+          />
+          <ClassGameBoard
+            fishData={this.props.initialFishes[currentPictureIndex]}
+            handleGuessResult={this.handleGuessResult}
+          />
+        </>  
+        )
+      }
+    </>
     );
   }
 }

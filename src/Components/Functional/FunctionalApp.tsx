@@ -9,10 +9,13 @@ interface FunctionalAppProps {
 }
 
 export function FunctionalApp({ initialFishes }: FunctionalAppProps) {
-  const [answersLeft, setAnswersLeft] = useState<Fish[]>(initialFishes);
+
   const [correctCount, setCorrectCount] = useState<number>(0);
   const [incorrectCount, setIncorrectCount] = useState<number>(0);
   const [currentPictureIndex, setCurrentPictureIndex] = useState<number>(0);
+
+  const isGameOver = currentPictureIndex === initialFishes.length;
+  const answersLeft  = initialFishes.slice(currentPictureIndex).map((fish) => fish.name)
 
   const handleGuessResult = (isCorrect: boolean) => {
     if (isCorrect) {
@@ -20,31 +23,32 @@ export function FunctionalApp({ initialFishes }: FunctionalAppProps) {
     } else {
       setIncorrectCount((prevCount) => prevCount + 1);
     }
-    setAnswersLeft((prevAnswers) => prevAnswers.slice(1));
     setCurrentPictureIndex((prevIndex) => prevIndex + 1);
   };
 
-  if (answersLeft.length === 0) {
-    return (
+
+  return (
+    <>
+      {isGameOver && (
       <FunctionalFinalScore
         correctCount={correctCount}
         totalCount={correctCount + incorrectCount}
       />
-    );
-  }
-
-  return (
-    <>
-      <FunctionalScoreBoard
-        incorrectCount={incorrectCount}
-        correctCount={correctCount}
-        answersLeft={answersLeft.map((fish) => fish.name)}
-      />
-      <FunctionalGameBoard
-        initialFishes={initialFishes}
-        currentPictureIndex={currentPictureIndex}
-        handleGuessResult={handleGuessResult}
-      />
+      )}
+      {!isGameOver && (
+        <>
+          <FunctionalScoreBoard
+            incorrectCount={incorrectCount}
+            correctCount={correctCount}
+            answersLeft={answersLeft}
+          />
+          <FunctionalGameBoard
+            fishData={initialFishes[currentPictureIndex]}
+            handleGuessResult={handleGuessResult}
+          />
+        </>  
+        )
+      }
     </>
   );
 }
